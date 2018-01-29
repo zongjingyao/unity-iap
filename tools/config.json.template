@@ -1,0 +1,16 @@
+{
+    "xiaomi": {
+        "verify_signature": false,
+        "verify_api": true,
+        "is_debug": false,
+        "client_id": "",
+        "client_secret": "",
+        "public_key": ""
+    },
+    "google_play": {
+        "public_key": ""
+    },
+    "apple_app_store": {
+        "shared_secret": ""
+    }
+}

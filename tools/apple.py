@@ -5,6 +5,7 @@ Validating Receipts With the App Store
 https://developer.apple.com/library/content/releasenotes/General/ValidateAppStoreReceipt/Chapters/ValidateRemotely.html
 '''
 import json
+import argparse
 import requests
 
 
@@ -33,3 +34,22 @@ class Apple():
         if json_data.has_key('status') and json_data['status'] == 0:
             return (True, resp.content)
         return (False, resp.content)
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-s", "--secret", help="Shared Secret")
+    parser.add_argument("-r", "--receipt", help="Apple App Store IAP receipt")
+    args = parser.parse_args()
+    if not args.receipt:
+        print('Please offer Apple App Store IAP receipt!')
+        return
+    apple = Apple(args.secret)
+    result = apple.verify_receipt(args.receipt)
+    print('\nThe receipt is %s.\n' % ('valid' if result[0] else 'invalid'))
+    if result[1]:
+        print result[1]
+
+
+if __name__ == '__main__':
+    main()

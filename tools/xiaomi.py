@@ -3,6 +3,7 @@
 
 import json
 import hashlib
+import argparse
 import requests
 from utils import Utils
 
@@ -57,3 +58,40 @@ class Xiaomi():
         params = {'userLoginToken': user_login_token, 'sign': sign}
         resp = self._session.get(url=url, params=params)
         return resp.content
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--client_id", help="UnityChannel Client ID")
+    parser.add_argument("--client_secret", help="UnityChannel Client Secret")
+    parser.add_argument("--public_key", help="UnityChannel Public Key")
+    parser.add_argument("--verify_signature", action='store_true', help="Verfiy signature")
+    parser.add_argument("--verify_api", action='store_true', help="Verfiy via server API")
+    parser.add_argument("--receipt", help="Xiaomi IAP receipt")
+    parser.add_argument("--debug", action='store_true', help="Use debug environment")
+    args = parser.parse_args()
+
+    if args.verify_signature and not args.public_key:
+        print('\nPlease offer Public Key!')
+
+    if args.verify_api and not (args.client_id and args.client_secret):
+        print('\nPlease offer Client ID, Client Secret!')
+
+    if not args.verify_signature and not args.verify_api:
+        print('\nPlease specify a way to verify receipt! --verify_signature or --verify_api')
+
+    if not args.receipt:
+        print('\nPlease offer Xiaomi IAP receipt!')
+        return
+
+    xiaomi = Xiaomi(args.client_id, args.client_secret, args.public_key, args.verify_signature,
+                    args.verify_api, args.debug)
+    result = xiaomi.verify_receipt(args.receipt)
+    print('\nThe receipt in %s environment is %s.\n' % \
+        ('debug' if args.debug else 'production', 'valid' if result[0] else 'invalid'))
+    if result[1]:
+        print result[1]
+
+
+if __name__ == '__main__':
+    main()

@@ -28,10 +28,10 @@ class Apple():
         json_data = resp.json()
         # 21007: This receipt is from the test environment, but it was sent to the production
         # environment for verification. Send it to the test environment instead.
-        if json_data.has_key('status') and json_data['status'] == 21007:
+        if 'status' in json_data and json_data['status'] == 21007:
             resp = self._send_request(Apple.SANDBOX_URL_VERIFY_RECEIPT, receipt)
             json_data = resp.json()
-        if json_data.has_key('status') and json_data['status'] == 0:
+        if 'status' in json_data and json_data['status'] == 0:
             return (True, resp.content)
         return (False, resp.content)
 
@@ -48,7 +48,7 @@ def main():
     result = apple.verify_receipt(args.receipt)
     print('\nThe receipt is %s.\n' % ('valid' if result[0] else 'invalid'))
     if result[1]:
-        print result[1]
+        print (result[1])
 
 
 if __name__ == '__main__':

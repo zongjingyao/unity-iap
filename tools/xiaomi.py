@@ -37,7 +37,7 @@ class Xiaomi():
             order_query_token = receipt['orderQueryToken']
             sign_data = '%s&%s&%s&%s' % (self._client_id, cp_order_id, order_query_token,
                                          self._client_secret)
-            sign = hashlib.md5(sign_data).hexdigest()
+            sign = hashlib.md5(sign_data.encode('utf-8')).hexdigest()
             params = {
                 'cpOrderId': cp_order_id,
                 'clientId': self._client_id,
@@ -47,7 +47,7 @@ class Xiaomi():
             url = Xiaomi.DEBUG_URL_VERIFY_RECEIPT if self._is_debug else Xiaomi.URL_VERIFY_RECEIPT
             resp = self._session.get(url=url, params=params)
             json_data = resp.json()
-            if json_data.has_key('status') and json_data['status'] == 'SUCCESS':
+            if 'status' in json_data and json_data['status'] == 'SUCCESS':
                 return (True, resp.content)
         return (False, None)
 
@@ -90,7 +90,7 @@ def main():
     print('\nThe receipt in %s environment is %s.\n' % \
         ('debug' if args.debug else 'production', 'valid' if result[0] else 'invalid'))
     if result[1]:
-        print result[1]
+        print (result[1])
 
 
 if __name__ == '__main__':

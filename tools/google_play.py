@@ -34,7 +34,7 @@ def main():
     result = google_play.verify_receipt(args.receipt)
     print('\nThe receipt is %s.\n' % ('valid' if result[0] else 'invalid'))
     if result[1]:
-        print result[1]
+        print (result[1])
 
 
 if __name__ == '__main__':

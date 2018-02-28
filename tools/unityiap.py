@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 
 import json
-from google import GooglePlay
+from google_play import GooglePlay
 from apple import Apple
 from xiaomi import Xiaomi
 

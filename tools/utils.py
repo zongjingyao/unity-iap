@@ -14,7 +14,7 @@ class Utils():
         key = RSA.importKey(public_key)
         missing_padding = 4 - len(signature) % 4
         if missing_padding:
-            signature += b'=' * missing_padding
-        h = SHA.new(data)
+            signature += '=' * missing_padding
+        h = SHA.new(data.encode('utf-8'))
         verifier = PKCS1_v1_5.new(key)
         return verifier.verify(h, base64.b64decode(signature))

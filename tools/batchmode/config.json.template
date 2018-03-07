@@ -1,0 +1,18 @@
+{
+    "default": {
+        "unityPath": "",
+        "keystoreName": "",
+        "keystorePass": "",
+        "keyaliasName": "",
+        "keyaliasPass": "",
+        "executeMethod": "",
+        "projectPath": ""
+    },
+    "projects": [{
+        "productName": "",
+        "packageName": "",
+        "apkPath": "",
+        "iapTarget": "",
+        "logFile": ""
+    }]
+}

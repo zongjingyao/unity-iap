@@ -19,7 +19,9 @@ class Apple():
         self._session = requests.session()
 
     def _send_request(self, url, receipt):
-        data = json.dumps({'receipt-data': receipt, 'password': self._shared_secret})
+        data = {'receipt-data': receipt}
+        if not self._shared_secret:
+            data['password'] = self._shared_secret
         headers = {'Content-Type': 'text/plain'}
         return self._session.post(url=url, data=data, headers=headers)
 
@@ -48,7 +50,7 @@ def main():
     result = apple.verify_receipt(args.receipt)
     print('\nThe receipt is %s.\n' % ('valid' if result[0] else 'invalid'))
     if result[1]:
-        print (result[1])
+        print(result[1])
 
 
 if __name__ == '__main__':

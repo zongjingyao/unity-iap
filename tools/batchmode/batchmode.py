@@ -69,7 +69,7 @@ class BatchMode():
     def import_package(self, project, package_path):
         cmds = [
             self._default['unityPath'], '-projectPath', project['projectPath'], '-logFile',
-            project['logFile'], '-importPackage', package_path)
+            project['logFile'], '-importPackage', package_path
         ]
         logger.info('Import package with cmd: \n\t' + ' '.join(cmds))
         ret_code = subprocess.call(cmds, shell=False)
